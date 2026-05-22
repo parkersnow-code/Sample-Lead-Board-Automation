@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jake's Heating & Air Lead Board</title>
+  <style>
+    :root {
+      --bg: #eef4fb;
+      --surface: rgba(255, 255, 255, 0.94);
+      --surface-strong: #ffffff;
+      --surface-soft: #f7fafc;
+      --border: #d5dfeb;
+      --text: #143059;
+      --muted: #62748d;
+      --blue: #1f7bc4;
+      --blue-deep: #123a75;
+      --blue-soft: #dff1ff;
+      --orange: #f88921;
+      --orange-soft: #fff0df;
+      --green: #1f9d67;
+      --green-soft: #e6fbf1;
+      --red: #d34c4c;
+      --red-soft: #ffe7e7;
+      --gold: #ba7c16;
+      --gold-soft: #fff6dd;
+      --shadow: 0 18px 60px rgba(17, 45, 88, 0.12);
+      --shadow-soft: 0 8px 28px rgba(17, 45, 88, 0.08);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(31, 123, 196, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(248, 137, 33, 0.14), transparent 24%),
+        linear-gradient(180deg, #f4f8fd 0%, #eaf2fb 100%);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", system-ui, sans-serif;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 251, 255, 0.88));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -90px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(248, 137, 33, 0.22), transparent 65%);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 26px;
+      background: #ffffff;
+      padding: 10px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 10px;
+      font-size: clamp(2.1rem, 4vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .subtitle {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .hero-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .point {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    .point-mark {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), #41a7e8);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 22px;
+      border: 1px solid rgba(31, 123, 196, 0.16);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(20, 48, 89, 0.96), rgba(17, 57, 112, 0.94)),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 26%);
+      color: white;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card .mini-logo {
+      width: 58px;
+      margin-bottom: 12px;
+      padding: 6px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .hero-stat {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-stat small,
+    .stat-card small,
+    .detail-meta small,
+    .panel-title small {
+      display: block;
+      color: inherit;
+      opacity: 0.78;
+      font-weight: 800;
+    }
+
+    .hero-stat strong,
+    .stat-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.5rem;
+      letter-spacing: -0.05em;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .stat-card,
+    .panel,
+    .column,
+    .architecture-card {
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat-card {
+      padding: 20px;
+    }
+
+    .stat-card.highlight {
+      background: linear-gradient(135deg, rgba(31, 123, 196, 0.92), rgba(17, 57, 112, 0.96));
+      color: white;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.95fr;
+      gap: 18px;
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title h2,
+    .panel-title h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 850;
+      padding: 10px 14px;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+      border-color: transparent;
+      color: #ffffff;
+    }
+
+    .btn.orange {
+      background: linear-gradient(135deg, var(--orange), #f46d1d);
+      border-color: transparent;
+      color: #ffffff;
+    }
+
+    .btn.soft {
+      background: var(--surface-soft);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(240px, 1fr));
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .column {
+      padding: 16px;
+      min-height: 560px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 251, 255, 0.92));
+    }
+
+    .column-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .column-header h3 {
+      margin: 0;
+      font-size: 0.98rem;
+      letter-spacing: -0.02em;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 900;
+      color: var(--text);
+      background: var(--surface-soft);
+    }
+
+    .lead-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .lead-card {
+      position: relative;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .lead-card:hover,
+    .lead-card.active {
+      transform: translateY(-2px);
+      border-color: rgba(31, 123, 196, 0.35);
+      box-shadow: 0 14px 30px rgba(17, 45, 88, 0.12);
+    }
+
+    .lead-card.active::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 2px solid rgba(31, 123, 196, 0.28);
+      pointer-events: none;
+    }
+
+    .lead-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .lead-name {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .lead-sub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .badge.blue { background: var(--blue-soft); color: var(--blue-deep); }
+    .badge.orange { background: var(--orange-soft); color: #b65b0a; }
+    .badge.green { background: var(--green-soft); color: #0f7047; }
+    .badge.red { background: var(--red-soft); color: #a33d3d; }
+    .badge.gold { background: var(--gold-soft); color: #7d5613; }
+
+    .lead-value {
+      margin-top: 10px;
+      color: var(--text);
+      font-weight: 850;
+      font-size: 0.9rem;
+    }
+
+    .lead-message {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .mini-btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.74rem;
+      font-weight: 850;
+      padding: 6px 9px;
+    }
+
+    .right-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .detail-header h2 {
+      margin: 6px 0 0;
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    .detail-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .meta-card {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .meta-card strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.96rem;
+    }
+
+    .detail-block {
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-block h3 {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      letter-spacing: -0.02em;
+    }
+
+    .message-card,
+    .task,
+    .timeline-item,
+    .architecture-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .message-card {
+      padding: 14px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .task-list,
+    .timeline,
+    .architecture-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .task {
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .task strong,
+    .timeline-item strong,
+    .architecture-item strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .task p,
+    .timeline-item p,
+    .architecture-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .timeline-item,
+    .architecture-item {
+      padding: 12px;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      position: relative;
+      padding: 14px 14px 14px 52px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface-soft);
+    }
+
+    .flow-step::before {
+      content: attr(data-step);
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--orange));
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 0.8rem;
+    }
+
+    .value-banner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(31, 123, 196, 0.08), rgba(248, 137, 33, 0.12));
+      border: 1px solid rgba(31, 123, 196, 0.18);
+    }
+
+    .value-banner img {
+      width: 64px;
+      padding: 6px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .architecture-section {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .architecture-card {
+      padding: 18px;
+    }
+
+    .architecture-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .code {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #e9f3fb;
+      color: var(--blue-deep);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .watermark {
+      position: absolute;
+      inset: auto 18px 18px auto;
+      width: 54px;
+      opacity: 0.08;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      min-height: 160px;
+      padding: 20px;
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .empty-state img {
+      width: 50px;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 1260px) {
+      .hero,
+      .main-grid,
+      .architecture-section {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        padding: 14px;
+      }
+
+      .hero {
+        padding: 20px;
+      }
+
+      .stats,
+      .hero-stat-grid,
+      .detail-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .btn,
+      .mini-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <div class="brand-row">
+          <img class="brand-logo" src="logo.png" alt="Jake's Heating and Air logo">
+          <div>
+            <p class="eyebrow">Lead Recovery Demo</p>
+            <div style="font-size:0.95rem;font-weight:900;color:var(--blue-deep);">Jake's Heating &amp; Air</div>
+          </div>
+        </div>
+        <h1>You never lose a lead again because of a missed call.</h1>
+        <p class="subtitle">This demo Lead Board captures calls, texts, and web forms in one place, starts the conversation instantly, and gives the team a clear path from missed call to booked job.</p>
+        <div class="hero-points">
+          <div class="point">
+            <div class="point-mark">1</div>
+            <div>
+              <strong>Missed call coverage</strong>
+              <div class="subtitle" style="font-size:0.92rem;">A missed call automatically creates a lead, logs the event, and simulates a friendly text within a demo-safe delay.</div>
+            </div>
+          </div>
+          <div class="point">
+            <div class="point-mark">2</div>
+            <div>
+              <strong>Single lead board</strong>
+              <div class="subtitle" style="font-size:0.92rem;">Calls, texts, and website forms all land in one pipeline with statuses the owner or office team can understand immediately.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <img class="mini-logo" src="logo.png" alt="Jake's Heating and Air mark">
+        <h2>Owner-facing promise</h2>
+        <p class="subtitle" style="color:rgba(255,255,255,0.82);">You start the conversation instantly, even if everyone is on a job. This mockup is frontend-first today, but mapped to real webhook endpoints and Twilio-ready backend flows for later.</p>
+        <div class="hero-stat-grid" id="heroStatGrid"></div>
+      </aside>
+    </section>
+
+    <section class="stats" id="statsGrid"></section>
+
+    <section class="main-grid">
+      <div class="panel">
+        <div class="panel-title">
+          <div>
+            <h2>Lead Board</h2>
+            <small>Unified pipeline for missed calls, inbound texts, and web forms.</small>
+          </div>
+          <div class="controls">
+            <button class="btn primary" data-demo="missed-call">Trigger Missed Call</button>
+            <button class="btn orange" data-demo="text">Trigger Inbound Text</button>
+            <button class="btn soft" data-demo="web-form">Trigger Website Form</button>
+            <button class="btn soft" data-demo="answered-call">Trigger Answered Call</button>
+            <button class="btn soft" data-demo="reset">Reset Demo</button>
+          </div>
+        </div>
+        <div class="board" id="board"></div>
+      </div>
+
+      <div class="right-stack">
+        <section class="panel" id="detailPanel"></section>
+        <section class="panel">
+          <div class="panel-title">
+            <div>
+              <h3>Automation Overview</h3>
+              <small>Missed-call flow designed to map cleanly into real webhook automation later.</small>
+            </div>
+          </div>
+          <div class="flow">
+            <div class="flow-step" data-step="1">
+              <strong>Inbound event hits a webhook</strong>
+              <p>Phone call, text message, or website form gets normalized into a single lead event format.</p>
+            </div>
+            <div class="flow-step" data-step="2">
+              <strong>Lead Board creates or updates the lead</strong>
+              <p>Each new event either creates a fresh lead or attaches to an existing contact record and timeline.</p>
+            </div>
+            <div class="flow-step" data-step="3">
+              <strong>Auto-reply and task fire</strong>
+              <p>Missed calls trigger the friendly text. Texts trigger a follow-up task. Everything lands in the lead detail view.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="value-banner">
+            <img src="logo.png" alt="Jake's Heating and Air logo">
+            <div>
+              <strong style="display:block;font-size:1rem;margin-bottom:4px;">Business value to highlight</strong>
+              <div class="subtitle" style="font-size:0.92rem;">You never lose a lead again because of a missed call. You start the conversation instantly, even if everyone is on a job.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="architecture-section">
+      <article class="architecture-card">
+        <h3>Future API Surface</h3>
+        <div class="architecture-grid">
+          <div class="architecture-item">
+            <strong>Webhook endpoints</strong>
+            <p><span class="code">POST /webhooks/calls</span> <span class="code">POST /webhooks/sms</span> <span class="code">POST /webhooks/forms</span></p>
+          </div>
+          <div class="architecture-item">
+            <strong>Lead endpoints</strong>
+            <p><span class="code">GET /api/leads</span> <span class="code">GET /api/leads/:id</span> <span class="code">PATCH /api/leads/:id</span></p>
+          </div>
+          <div class="architecture-item">
+            <strong>Task and summary endpoints</strong>
+            <p><span class="code">POST /api/leads/:id/tasks</span> <span class="code">GET /api/dashboard/summary</span></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="architecture-card">
+        <h3>Core Data Model</h3>
+        <div class="architecture-grid">
+          <div class="architecture-item">
+            <strong>Lead</strong>
+            <p>id, createdAt, source, customerName, phone, email, messagePreview, fullMessage, status, assignedTo, lastActivityAt, quotedAmount, notes</p>
+          </div>
+          <div class="architecture-item">
+            <strong>LeadEvent</strong>
+            <p>id, leadId, type, timestamp, payload for call, SMS, form, task, and status timeline entries.</p>
+          </div>
+          <div class="architecture-item">
+            <strong>Task + AutomationRule</strong>
+            <p>Follow-up tasks attach to a lead and automation rules define reply templates and follow-up timing.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="architecture-card" style="position:relative;overflow:hidden;">
+        <h3>Real MVP Path</h3>
+        <div class="architecture-grid">
+          <div class="architecture-item">
+            <strong>Recommended vendor target</strong>
+            <p>Twilio for phone/SMS, webhook-backed backend service, and a database like Postgres or Supabase.</p>
+          </div>
+          <div class="architecture-item">
+            <strong>Operational next steps</strong>
+            <p>Add authentication, delivery logging, SMS opt-out handling, assignment rules, and persistent lead ownership.</p>
+          </div>
+          <div class="architecture-item">
+            <strong>Deployment shape</strong>
+            <p>Frontend deploys to Vercel or Netlify. Backend lives separately and processes all webhook events and automations.</p>
+          </div>
+        </div>
+        <img class="watermark" src="logo.png" alt="">
+      </article>
+    </section>
+  </div>
+
+  <script>
+    const STATUSES = [
+      "New - Missed Call",
+      "New - Text",
+      "New - Web Form",
+      "In Progress (Quoted)",
+      "Booked",
+      "Lost"
+    ];
+
+    const STATUS_THEME = {
+      "New - Missed Call": "orange",
+      "New - Text": "blue",
+      "New - Web Form": "gold",
+      "In Progress (Quoted)": "blue",
+      "Booked": "green",
+      "Lost": "red"
+    };
+
+    const AUTO_TEXT_TEMPLATE = "Hi, this is Jake's Heating & Air. We just missed your call. How can we help?";
+
+    const INITIAL_DATA = () => ({
+      leads: [
+        {
+          id: "lead-101",
+          createdAt: "2026-05-21T08:12:00",
+          source: "missed_call",
+          customerName: "Megan Carter",
+          phone: "(405) 555-0182",
+          email: "megan.carter@example.com",
+          messagePreview: "AC blowing warm air and the kids are home today.",
+          fullMessage: "AC is blowing warm air and the upstairs is getting hot fast. Looking for same-day help if possible.",
+          status: "New - Missed Call",
+          assignedTo: "Office Queue",
+          lastActivityAt: "2026-05-21T08:14:00",
+          quotedAmount: 0,
+          notes: "Family home, same-day urgency. Ideal demo lead for missed-call recovery.",
+          autoReplySent: true,
+          estimatedValue: 420,
+          tags: ["Same-day", "Residential"],
+          tasks: [
+            { id: "task-101", title: "Call back within 10 minutes", dueAt: "2026-05-21T08:22:00", completed: false, owner: "Front Desk" }
+          ],
+          timeline: [
+            { id: "evt-101", type: "call_missed", timestamp: "2026-05-21T08:12:00", text: "Incoming call missed from Megan Carter.", payload: { duration: "00:41" } },
+            { id: "evt-102", type: "lead_created", timestamp: "2026-05-21T08:12:30", text: "Lead created with status New - Missed Call.", payload: {} },
+            { id: "evt-103", type: "sms_auto_reply_sent", timestamp: "2026-05-21T08:14:00", text: AUTO_TEXT_TEMPLATE, payload: { delivery: "sent" } },
+            { id: "evt-104", type: "task_created", timestamp: "2026-05-21T08:14:00", text: "Follow-up task created for Front Desk.", payload: {} }
+          ]
+        },
+        {
+          id: "lead-102",
+          createdAt: "2026-05-21T09:06:00",
+          source: "sms",
+          customerName: "Chris Haynes",
+          phone: "(405) 555-0125",
+          email: "",
+          messagePreview: "Need a quote on replacing our old furnace before winter.",
+          fullMessage: "Hi, I need a quote on replacing our old furnace before winter hits. Can someone text me some options?",
+          status: "In Progress (Quoted)",
+          assignedTo: "Jake",
+          lastActivityAt: "2026-05-21T10:10:00",
+          quotedAmount: 6900,
+          notes: "Budget-conscious but responsive. Wants options by text first.",
+          autoReplySent: false,
+          estimatedValue: 6900,
+          tags: ["Replacement", "Quote sent"],
+          tasks: [
+            { id: "task-102", title: "Follow up on quoted furnace replacement", dueAt: "2026-05-21T14:00:00", completed: false, owner: "Jake" }
+          ],
+          timeline: [
+            { id: "evt-201", type: "sms_received", timestamp: "2026-05-21T09:06:00", text: "Inbound text captured and attached to new lead.", payload: {} },
+            { id: "evt-202", type: "task_created", timestamp: "2026-05-21T09:06:20", text: "Quote follow-up task created automatically.", payload: {} },
+            { id: "evt-203", type: "status_changed", timestamp: "2026-05-21T10:10:00", text: "Lead moved to In Progress (Quoted).", payload: { from: "New - Text", to: "In Progress (Quoted)" } }
+          ]
+        },
+        {
+          id: "lead-103",
+          createdAt: "2026-05-21T11:18:00",
+          source: "web_form",
+          customerName: "Alicia Perez",
+          phone: "(405) 555-0133",
+          email: "alicia.perez@example.com",
+          messagePreview: "Spring tune-up request for two units.",
+          fullMessage: "Website form request for spring tune-up on two units. Prefer Friday afternoon if possible.",
+          status: "Booked",
+          assignedTo: "Dispatch",
+          lastActivityAt: "2026-05-21T12:06:00",
+          quotedAmount: 280,
+          notes: "Booked as maintenance visit.",
+          autoReplySent: false,
+          estimatedValue: 280,
+          tags: ["Maintenance", "Booked"],
+          tasks: [
+            { id: "task-103", title: "Confirm Friday service window", dueAt: "2026-05-21T12:30:00", completed: true, owner: "Dispatch" }
+          ],
+          timeline: [
+            { id: "evt-301", type: "web_form_received", timestamp: "2026-05-21T11:18:00", text: "Website form submitted for maintenance request.", payload: {} },
+            { id: "evt-302", type: "task_created", timestamp: "2026-05-21T11:19:00", text: "Dispatch confirmation task created.", payload: {} },
+            { id: "evt-303", type: "status_changed", timestamp: "2026-05-21T12:06:00", text: "Lead moved to Booked.", payload: { from: "New - Web Form", to: "Booked" } }
+          ]
+        },
+        {
+          id: "lead-104",
+          createdAt: "2026-05-21T07:42:00",
+          source: "call_answered",
+          customerName: "Devon Smith",
+          phone: "(405) 555-0108",
+          email: "",
+          messagePreview: "Emergency no-cool call, tech dispatched immediately.",
+          fullMessage: "Answered call. Homeowner has no cooling and approved dispatch fee on the call.",
+          status: "Booked",
+          assignedTo: "Tech Team",
+          lastActivityAt: "2026-05-21T07:55:00",
+          quotedAmount: 180,
+          notes: "Answered live. Good example that not every phone event needs recovery automation.",
+          autoReplySent: false,
+          estimatedValue: 180,
+          tags: ["Emergency", "Dispatched"],
+          tasks: [
+            { id: "task-104", title: "Tech ETA confirmation", dueAt: "2026-05-21T08:05:00", completed: true, owner: "Dispatch" }
+          ],
+          timeline: [
+            { id: "evt-401", type: "call_answered", timestamp: "2026-05-21T07:42:00", text: "Answered call logged from Devon Smith.", payload: { duration: "03:12" } },
+            { id: "evt-402", type: "status_changed", timestamp: "2026-05-21T07:55:00", text: "Lead marked Booked after dispatch confirmation.", payload: {} }
+          ]
+        },
+        {
+          id: "lead-105",
+          createdAt: "2026-05-20T16:10:00",
+          source: "web_form",
+          customerName: "Martin Lewis",
+          phone: "(405) 555-0111",
+          email: "martin.lewis@example.com",
+          messagePreview: "Commercial rooftop inspection request.",
+          fullMessage: "Commercial property manager asking for rooftop inspection proposal. Timing slipped and lead went cold.",
+          status: "Lost",
+          assignedTo: "Commercial Queue",
+          lastActivityAt: "2026-05-21T09:40:00",
+          quotedAmount: 0,
+          notes: "Useful demo example for showing lost-lead tracking.",
+          autoReplySent: false,
+          estimatedValue: 2100,
+          tags: ["Commercial", "Cold"],
+          tasks: [
+            { id: "task-105", title: "Re-engage in 30 days", dueAt: "2026-06-20T09:00:00", completed: false, owner: "Office Queue" }
+          ],
+          timeline: [
+            { id: "evt-501", type: "web_form_received", timestamp: "2026-05-20T16:10:00", text: "Commercial inspection request submitted.", payload: {} },
+            { id: "evt-502", type: "status_changed", timestamp: "2026-05-21T09:40:00", text: "Lead marked Lost after no response.", payload: {} }
+          ]
+        }
+      ],
+      selectedLeadId: "lead-101",
+      notification: "Demo loaded with seeded calls, texts, and forms.",
+      rule: {
+        missedCallTemplate: AUTO_TEXT_TEMPLATE,
+        followUpDelayMinutes: 10,
+        missedCallTextWindow: "1-2 minutes"
+      }
+    });
+
+    let state = INITIAL_DATA();
+
+    const boardEl = document.getElementById("board");
+    const detailPanelEl = document.getElementById("detailPanel");
+    const statsGridEl = document.getElementById("statsGrid");
+    const heroStatGridEl = document.getElementById("heroStatGrid");
+
+    function formatTime(iso) {
+      const date = new Date(iso);
+      return date.toLocaleString(undefined, {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+
+    function formatCurrency(value) {
+      return value.toLocaleString(undefined, {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0
+      });
+    }
+
+    function getSelectedLead() {
+      return state.leads.find((lead) => lead.id === state.selectedLeadId) || state.leads[0];
+    }
+
+    function statusCount(status) {
+      return state.leads.filter((lead) => lead.status === status).length;
+    }
+
+    function totalOpenLeads() {
+      return state.leads.filter((lead) => !["Booked", "Lost"].includes(lead.status)).length;
+    }
+
+    function totalPipelineValue() {
+      return state.leads
+        .filter((lead) => lead.status !== "Lost")
+        .reduce((sum, lead) => sum + lead.estimatedValue, 0);
+    }
+
+    function avgResponseStatus() {
+      const missed = state.leads.filter((lead) => lead.source === "missed_call");
+      const recovered = missed.filter((lead) => lead.autoReplySent).length;
+      return missed.length ? `${recovered}/${missed.length} auto-recovered` : "0/0 auto-recovered";
+    }
+
+    function sourceLabel(source) {
+      if (source === "missed_call") return "Missed Call";
+      if (source === "sms") return "Text Message";
+      if (source === "web_form") return "Website Form";
+      return "Answered Call";
+    }
+
+    function themeForLead(lead) {
+      return STATUS_THEME[lead.status] || "blue";
+    }
+
+    function renderStats() {
+      const booked = statusCount("Booked");
+      const stats = [
+        { label: "Open Leads", value: totalOpenLeads(), note: "Calls, texts, and forms awaiting closure", highlight: true },
+        { label: "Booked Jobs", value: booked, note: "Leads moved all the way to a confirmed appointment" },
+        { label: "Pipeline Value", value: formatCurrency(totalPipelineValue()), note: "Estimated opportunity excluding lost leads" },
+        { label: "Missed Call Recovery", value: avgResponseStatus(), note: "Auto-text performance from seeded and simulated calls" }
+      ];
+
+      statsGridEl.innerHTML = stats.map((stat) => `
+        <article class="stat-card ${stat.highlight ? "highlight" : ""}">
+          <small>${stat.label}</small>
+          <strong>${stat.value}</strong>
+          <div style="margin-top:8px;color:${stat.highlight ? "rgba(255,255,255,0.82)" : "var(--muted)"};font-size:0.86rem;line-height:1.45;">${stat.note}</div>
+        </article>
+      `).join("");
+
+      const heroStats = [
+        { label: "New today", value: state.leads.filter((lead) => lead.createdAt.startsWith("2026-05-21")).length },
+        { label: "Missed call text", value: state.rule.missedCallTextWindow },
+        { label: "Default task due", value: `${state.rule.followUpDelayMinutes} min` },
+        { label: "Vendor path", value: "Twilio-ready" }
+      ];
+
+      heroStatGridEl.innerHTML = heroStats.map((stat) => `
+        <div class="hero-stat">
+          <small>${stat.label}</small>
+          <strong>${stat.value}</strong>
+        </div>
+      `).join("");
+    }
+
+    function renderBoard() {
+      boardEl.innerHTML = STATUSES.map((status) => {
+        const leads = state.leads.filter((lead) => lead.status === status);
+        return `
+          <section class="column">
+            <div class="column-header">
+              <h3>${status}</h3>
+              <span class="pill">${leads.length}</span>
+            </div>
+            <div class="lead-list">
+              ${leads.length ? leads.map((lead) => renderLeadCard(lead)).join("") : `
+                <div class="empty-state">
+                  <img src="logo.png" alt="">
+                  <div>No leads in this column yet.</div>
+                </div>
+              `}
+            </div>
+          </section>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-lead-id]").forEach((node) => {
+        node.addEventListener("click", (event) => {
+          const id = event.currentTarget.getAttribute("data-lead-id");
+          state.selectedLeadId = id;
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-move]").forEach((node) => {
+        node.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const leadId = event.currentTarget.getAttribute("data-lead-id");
+          const nextStatus = event.currentTarget.getAttribute("data-move");
+          moveLead(leadId, nextStatus);
+        });
+      });
+    }
+
+    function renderLeadCard(lead) {
+      const nextMove = nextRecommendedStatus(lead.status);
+      return `
+        <article class="lead-card ${lead.id === state.selectedLeadId ? "active" : ""}" data-lead-id="${lead.id}">
+          <div class="lead-top">
+            <div>
+              <p class="lead-name">${lead.customerName}</p>
+              <p class="lead-sub">${lead.phone}</p>
+            </div>
+            <span class="badge ${themeForLead(lead)}">${sourceLabel(lead.source)}</span>
+          </div>
+          <div class="lead-value">${lead.quotedAmount ? formatCurrency(lead.quotedAmount) + " quoted" : formatCurrency(lead.estimatedValue) + " est. value"}</div>
+          <div class="lead-message">${lead.messagePreview}</div>
+          <div class="lead-actions">
+            <button class="mini-btn" data-lead-id="${lead.id}" data-move="${nextMove}">Move to ${nextMove}</button>
+          </div>
+        </article>
+      `;
+    }
+
+    function nextRecommendedStatus(status) {
+      if (status === "New - Missed Call" || status === "New - Text" || status === "New - Web Form") return "In Progress (Quoted)";
+      if (status === "In Progress (Quoted)") return "Booked";
+      if (status === "Booked") return "Lost";
+      return "New - Text";
+    }
+
+    function renderDetailPanel() {
+      const lead = getSelectedLead();
+      if (!lead) {
+        detailPanelEl.innerHTML = "<div class='empty-state'><img src='logo.png' alt=''><div>No lead selected.</div></div>";
+        return;
+      }
+
+      detailPanelEl.innerHTML = `
+        <div class="detail-header">
+          <div>
+            <span class="badge ${themeForLead(lead)}">${lead.status}</span>
+            <h2>${lead.customerName}</h2>
+            <div class="subtitle" style="font-size:0.9rem;">${lead.phone}${lead.email ? " • " + lead.email : ""}</div>
+          </div>
+          <div class="badge ${lead.autoReplySent ? "green" : "blue"}">${lead.autoReplySent ? "Auto-text sent" : "Manual follow-up"}</div>
+        </div>
+
+        <div class="detail-meta">
+          <div class="meta-card">
+            <small>Lead source</small>
+            <strong>${sourceLabel(lead.source)}</strong>
+          </div>
+          <div class="meta-card">
+            <small>Assigned to</small>
+            <strong>${lead.assignedTo}</strong>
+          </div>
+          <div class="meta-card">
+            <small>Created</small>
+            <strong>${formatTime(lead.createdAt)}</strong>
+          </div>
+          <div class="meta-card">
+            <small>Last activity</small>
+            <strong>${formatTime(lead.lastActivityAt)}</strong>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Conversation Preview</h3>
+          <div class="message-card">${lead.fullMessage}</div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Follow-up Tasks</h3>
+          <div class="task-list">
+            ${lead.tasks.map((task) => `
+              <div class="task">
+                <div>
+                  <strong>${task.title}</strong>
+                  <p>Owner: ${task.owner} • Due ${formatTime(task.dueAt)}</p>
+                </div>
+                <span class="badge ${task.completed ? "green" : "gold"}">${task.completed ? "Done" : "Open"}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Timeline</h3>
+          <div class="timeline">
+            ${lead.timeline.slice().reverse().map((entry) => `
+              <div class="timeline-item">
+                <strong>${formatTimelineType(entry.type)}</strong>
+                <p>${entry.text}</p>
+                <p style="margin-top:6px;">${formatTime(entry.timestamp)}</p>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Notes</h3>
+          <div class="message-card">${lead.notes}</div>
+        </div>
+      `;
+    }
+
+    function formatTimelineType(type) {
+      const labels = {
+        call_missed: "Missed call received",
+        call_answered: "Answered call logged",
+        sms_received: "Inbound text received",
+        web_form_received: "Website form received",
+        sms_auto_reply_sent: "Auto-reply text sent",
+        task_created: "Task created",
+        status_changed: "Status changed",
+        lead_created: "Lead created"
+      };
+      return labels[type] || type;
+    }
+
+    function moveLead(leadId, nextStatus) {
+      const lead = state.leads.find((item) => item.id === leadId);
+      if (!lead) return;
+      const previous = lead.status;
+      lead.status = nextStatus;
+      lead.lastActivityAt = new Date().toISOString();
+      if (nextStatus === "In Progress (Quoted)" && !lead.quotedAmount) {
+        lead.quotedAmount = Math.max(lead.estimatedValue, 450);
+      }
+      lead.timeline.push({
+        id: `evt-${Date.now()}`,
+        type: "status_changed",
+        timestamp: lead.lastActivityAt,
+        text: `Lead moved from ${previous} to ${nextStatus}.`,
+        payload: { from: previous, to: nextStatus }
+      });
+      state.selectedLeadId = leadId;
+      render();
+    }
+
+    function demoLeadTemplate(kind) {
+      const stamp = new Date();
+      const iso = stamp.toISOString();
+      const id = `lead-${stamp.getTime()}`;
+
+      if (kind === "missed-call") {
+        return {
+          id,
+          createdAt: iso,
+          source: "missed_call",
+          customerName: "Taylor Reed",
+          phone: "(405) 555-0168",
+          email: "",
+          messagePreview: "Missed call from homeowner with urgent no-cool issue.",
+          fullMessage: "Simulated missed call. Homeowner likely needs fast help with no cooling. Auto-text should fire and a callback task should be created.",
+          status: "New - Missed Call",
+          assignedTo: "Office Queue",
+          lastActivityAt: iso,
+          quotedAmount: 0,
+          notes: "Demo-generated missed call to show automatic recovery.",
+          autoReplySent: false,
+          estimatedValue: 550,
+          tags: ["Demo", "Missed call"],
+          tasks: [
+            { id: `task-${stamp.getTime()}`, title: "Call back within 10 minutes", dueAt: new Date(stamp.getTime() + 10 * 60000).toISOString(), completed: false, owner: "Front Desk" }
+          ],
+          timeline: [
+            { id: `evt-${stamp.getTime()}-1`, type: "call_missed", timestamp: iso, text: "Incoming call missed from Taylor Reed.", payload: { duration: "00:28" } },
+            { id: `evt-${stamp.getTime()}-2`, type: "lead_created", timestamp: iso, text: "Lead created with status New - Missed Call.", payload: {} },
+            { id: `evt-${stamp.getTime()}-3`, type: "task_created", timestamp: iso, text: "Follow-up callback task created for Front Desk.", payload: {} }
+          ]
+        };
+      }
+
+      if (kind === "text") {
+        return {
+          id,
+          createdAt: iso,
+          source: "sms",
+          customerName: "Jordan Blake",
+          phone: "(405) 555-0154",
+          email: "",
+          messagePreview: "Need someone to look at our AC this afternoon if possible.",
+          fullMessage: "Hi, our AC is not keeping up this afternoon. Can someone come by today or tomorrow morning?",
+          status: "New - Text",
+          assignedTo: "Office Queue",
+          lastActivityAt: iso,
+          quotedAmount: 0,
+          notes: "Demo-generated inbound text. Should automatically create a follow-up task.",
+          autoReplySent: false,
+          estimatedValue: 390,
+          tags: ["Demo", "SMS"],
+          tasks: [
+            { id: `task-${stamp.getTime()}`, title: "Reply and qualify issue", dueAt: new Date(stamp.getTime() + 10 * 60000).toISOString(), completed: false, owner: "Front Desk" }
+          ],
+          timeline: [
+            { id: `evt-${stamp.getTime()}-1`, type: "sms_received", timestamp: iso, text: "Inbound text captured and attached to lead.", payload: {} },
+            { id: `evt-${stamp.getTime()}-2`, type: "task_created", timestamp: iso, text: "Follow-up text task created automatically.", payload: {} }
+          ]
+        };
+      }
+
+      if (kind === "web-form") {
+        return {
+          id,
+          createdAt: iso,
+          source: "web_form",
+          customerName: "Samantha Green",
+          phone: "(405) 555-0140",
+          email: "samantha.green@example.com",
+          messagePreview: "Website form submitted for indoor air quality consultation.",
+          fullMessage: "Interested in indoor air quality options and duct cleaning. Prefer an estimate by email first.",
+          status: "New - Web Form",
+          assignedTo: "Office Queue",
+          lastActivityAt: iso,
+          quotedAmount: 0,
+          notes: "Demo-generated form lead for service upsell and IAQ positioning.",
+          autoReplySent: false,
+          estimatedValue: 950,
+          tags: ["Demo", "IAQ"],
+          tasks: [
+            { id: `task-${stamp.getTime()}`, title: "Send estimate intro email", dueAt: new Date(stamp.getTime() + 20 * 60000).toISOString(), completed: false, owner: "Front Desk" }
+          ],
+          timeline: [
+            { id: `evt-${stamp.getTime()}-1`, type: "web_form_received", timestamp: iso, text: "Website form captured as new lead.", payload: {} },
+            { id: `evt-${stamp.getTime()}-2`, type: "task_created", timestamp: iso, text: "Follow-up email task created automatically.", payload: {} }
+          ]
+        };
+      }
+
+      return {
+        id,
+        createdAt: iso,
+        source: "call_answered",
+        customerName: "Cameron Young",
+        phone: "(405) 555-0177",
+        email: "",
+        messagePreview: "Answered call logged with service appointment interest.",
+        fullMessage: "Answered live. Customer wants same-week service and was happy to stay on the phone.",
+        status: "Booked",
+        assignedTo: "Dispatch",
+        lastActivityAt: iso,
+        quotedAmount: 225,
+        notes: "Demo-generated answered call to show phone logging even when there is no missed-call recovery needed.",
+        autoReplySent: false,
+        estimatedValue: 225,
+        tags: ["Demo", "Answered"],
+        tasks: [
+          { id: `task-${stamp.getTime()}`, title: "Confirm service window", dueAt: new Date(stamp.getTime() + 15 * 60000).toISOString(), completed: false, owner: "Dispatch" }
+        ],
+        timeline: [
+          { id: `evt-${stamp.getTime()}-1`, type: "call_answered", timestamp: iso, text: "Answered call logged from Cameron Young.", payload: { duration: "02:02" } },
+          { id: `evt-${stamp.getTime()}-2`, type: "task_created", timestamp: iso, text: "Service confirmation task created.", payload: {} }
+        ]
+      };
+    }
+
+    // Simulates incoming webhook events and the downstream automation effects for demo use.
+    function runDemo(kind) {
+      if (kind === "reset") {
+        state = INITIAL_DATA();
+        render();
+        return;
+      }
+
+      const lead = demoLeadTemplate(kind);
+      state.leads.unshift(lead);
+      state.selectedLeadId = lead.id;
+      render();
+
+      if (kind === "missed-call") {
+        window.setTimeout(() => {
+          const currentLead = state.leads.find((item) => item.id === lead.id);
+          if (!currentLead) return;
+          const sentAt = new Date().toISOString();
+          currentLead.autoReplySent = true;
+          currentLead.lastActivityAt = sentAt;
+          currentLead.timeline.push({
+            id: `evt-${Date.now()}`,
+            type: "sms_auto_reply_sent",
+            timestamp: sentAt,
+            text: AUTO_TEXT_TEMPLATE,
+            payload: { delivery: "sent", simulatedDelay: "90 seconds" }
+          });
+          render();
+        }, 1200);
+      }
+    }
+
+    function attachControls() {
+      document.querySelectorAll("[data-demo]").forEach((button) => {
+        button.addEventListener("click", () => runDemo(button.getAttribute("data-demo")));
+      });
+    }
+
+    function render() {
+      renderStats();
+      renderBoard();
+      renderDetailPanel();
+      attachControls();
+    }
+
+    render();
+  </script>
+</body>
+</html>
